@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
+import { Link } from "react-router-dom";
 
 function App() {
   const [data, setData] = useState([]);
@@ -72,11 +73,14 @@ function App() {
                     {/* cách 2 hover */}
                     {data.map((chir_data_2) =>
                       chir_data_2.nhomChucNang === chir_data.maChucNang ? (
-                        <li
-                          key={chir_data_2.maChucNang}
-                          className="submenu-item_2">
-                          {chir_data_2.tenChucNang}
-                        </li>
+                        <Link
+                          to={`${chir_data.maChucNang}/${chir_data_2.maChucNang}`}>
+                          <li
+                            key={chir_data_2.maChucNang}
+                            className="submenu-item_2">
+                            {chir_data_2.tenChucNang}
+                          </li>
+                        </Link>
                       ) : null
                     )}
                   </ul>
