@@ -1,7 +1,13 @@
 import React from "react";
+// import GoogleLoginButton from "../../google/GoogleLoginButton";
+import SideBar from "../sideBar/SideBar";
 
 function Home() {
-  return <h1>Home</h1>;
+  return (
+    <div>
+      <SideBar />
+    </div>
+  );
 }
 
 export default Home;
