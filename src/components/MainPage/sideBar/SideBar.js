@@ -21,6 +21,12 @@ function SideBar() {
     }
   };
 
+  const clickLogout = () => {
+    localStorage.clear("userLogin");
+    localStorage.setItem("firstLogin", false);
+    window.location.href = "/login";
+  };
+
   // const clickShow2 = (index) => {
   //     if (string.includes(index)) {
   //         const newArray = string.slice();
@@ -83,6 +89,13 @@ function SideBar() {
               )
           )
         : null}
+      <button
+        className="btn btn-primary"
+        onClick={() => {
+          clickLogout();
+        }}>
+        LogOut
+      </button>
     </div>
   );
 }

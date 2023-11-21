@@ -5,11 +5,11 @@ import "./Auth.css";
 
 const Popup = ({ res, number }) => {
   const [selectedOption, setSelectedOption] = useState("");
-
+  console.log(res);
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
     localStorage.setItem("remoteDB", event.target.value);
-    debugger;
+
     window.location.href = "/";
   };
   return (
@@ -49,7 +49,7 @@ const Popup = ({ res, number }) => {
                     </div>
                   ))
                 : null}
-              <CountdownTimer number={number} />
+              {/* <CountdownTimer number={number} /> */}
             </div>
             <div className="modal-footer">
               <button

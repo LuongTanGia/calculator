@@ -9,7 +9,7 @@ export const DataProvider = ({ children }) => {
   const tokenLogin = localStorage.getItem("tokenLoginDanhSach");
   const tokenLoginAcc = localStorage.getItem("tokenLogin");
 
-  console.log(tokenLoginAcc);
+  // console.log(tokenLoginAcc);
   const [token, setToken] = useState(tokenLogin);
   useEffect(() => {
     // const firstLogin = localStorage.getItem("firstLogin");

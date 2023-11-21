@@ -1,16 +1,31 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function UserAPI(token) {
+function UserAPI() {
   const [isLogged, setIsLogged] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [data, setData] = useState([]);
 
+  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
+  // console.log(userLogin);
   const remoteDB = localStorage.getItem("remoteDB");
-  console.log(token, "Access");
+
   useEffect(() => {
-    if (token) {
+    if (remoteDB) {
       const getUser = async () => {
+        try {
+          const res = await axios.post(
+            "https://isalewebapi.viettassaigon.vn/api/Auth/DanhSachDuLieu",
+            {
+              ...userLogin,
+            }
+          );
+
+          // localStorage.setItem("tokenLoginRef", res.data.rtkn);
+          localStorage.setItem("tokenLogin", res.data.tkn);
+        } catch (err) {
+          alert(err.response.data.msg);
+        }
+        const token = localStorage.getItem("tokenLogin");
         try {
           const res = await axios.post(
             "https://isalewebapi.viettassaigon.vn/api/Auth/DangNhap",
@@ -21,22 +36,18 @@ function UserAPI(token) {
           );
 
           setData(res.data.dataResults);
-          setTimeout(() => {
-            localStorage.setItem("tokenLoginRef", res.data.rtkn);
-            localStorage.setItem("tokenLogin", res.data.tkn);
-          }, 2000);
+          setIsLogged(true);
         } catch (err) {
-          alert(err.response.data.msg);
+          // alert(err.response.data.msg);
         }
       };
 
       getUser();
     }
-  }, [token]);
+  }, []);
 
   return {
     isLogged: [isLogged, setIsLogged],
-    isAdmin: [isAdmin, setIsAdmin],
     homeData: [data, setData],
   };
 }
