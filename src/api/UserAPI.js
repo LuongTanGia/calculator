@@ -4,8 +4,8 @@ import axios from "axios";
 function UserAPI() {
   const [isLogged, setIsLogged] = useState(false);
   const [data, setData] = useState([]);
-
-  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
+  const userLogin = localStorage.getItem("userLogin");
+  const userLoginAtob = JSON.parse(userLogin ? atob(userLogin) : userLogin);
   // console.log(userLogin);
   const remoteDB = localStorage.getItem("remoteDB");
 
@@ -16,7 +16,7 @@ function UserAPI() {
           const res = await axios.post(
             "https://isalewebapi.viettassaigon.vn/api/Auth/DanhSachDuLieu",
             {
-              ...userLogin,
+              ...userLoginAtob,
             }
           );
 

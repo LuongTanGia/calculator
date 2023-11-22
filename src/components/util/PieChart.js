@@ -1,6 +1,6 @@
 import React from "react";
 import "./util.css"; // Import file CSS để định dạng Ellipse
-import { GlobalState } from "../../GlobalState";
+// import { GlobalState } from "../../GlobalState";
 
 const Ellipse = ({ dataChart, color }) => {
   return (

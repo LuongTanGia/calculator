@@ -1,17 +1,21 @@
 // Popup.js
 import React, { useState } from "react";
-import CountdownTimer from "./Loading";
 import "./Auth.css";
 
-const Popup = ({ res, number }) => {
+const Popup = ({ res }) => {
   const [selectedOption, setSelectedOption] = useState("");
-  console.log(res);
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
     localStorage.setItem("remoteDB", event.target.value);
-
-    window.location.href = "/";
   };
+
+  const handleLogin = (e) => {
+    if (localStorage.getItem("remoteDB") != null) {
+      localStorage.setItem("firstLogin", true);
+      window.location.href = "/";
+    }
+  };
+
   return (
     <>
       <div
@@ -36,20 +40,22 @@ const Popup = ({ res, number }) => {
               </button>
             </div>
             <div className="modal-body">
-              {res.dataResults
-                ? res.dataResults.map((item, index) => (
-                    <div key={index}>
-                      {item.remoteDB}{" "}
-                      <input
-                        type="radio"
-                        value={item.remoteDB}
-                        checked={selectedOption === item.remoteDB}
-                        onChange={handleOptionChange}
-                      />
-                    </div>
-                  ))
-                : null}
-              {/* <CountdownTimer number={number} /> */}
+              {res.dataResults ? (
+                res.dataResults.map((item, index) => (
+                  <div key={index}>
+                    {item.remoteDB}{" "}
+                    <input
+                      type="radio"
+                      value={item.remoteDB}
+                      checked={selectedOption === item.remoteDB}
+                      onChange={handleOptionChange}
+                      name="remoteDB"
+                    />
+                  </div>
+                ))
+              ) : (
+                <p className="error_login">* {res.dataErrorDescription} *</p>
+              )}
             </div>
             <div className="modal-footer">
               <button
@@ -58,7 +64,12 @@ const Popup = ({ res, number }) => {
                 data-dismiss="modal">
                 Close
               </button>
-              <button type="button" className="btn btn-primary">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => {
+                  handleLogin();
+                }}>
                 Save changes
               </button>
             </div>

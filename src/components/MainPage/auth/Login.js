@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import Popup from "./Popup";
 import axios from "axios";
 import "./Auth.css";
@@ -11,7 +10,6 @@ function Login() {
   });
 
   const [data, setData] = useState([]);
-  const [number, setNumber] = useState(0);
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
@@ -27,16 +25,13 @@ function Login() {
       );
 
       if (res.data.tkn !== null) {
-        localStorage.setItem("firstLogin", true);
-        localStorage.setItem("userLogin", JSON.stringify(user));
+        localStorage.setItem("userLogin", btoa(JSON.stringify(user)));
       } else {
         localStorage.clear("userLogin");
+        setData([]);
       }
 
-      // setNumber(60);
-
       setData(res.data);
-      console.log(res);
     } catch (error) {
       if (error.response) {
         console.log(
@@ -98,7 +93,7 @@ function Login() {
               id="home"
               role="tabpanel"
               aria-labelledby="home-tab">
-              <h3 className="register-heading">Apply as a Employee</h3>
+              <h3 className="register-heading">Login</h3>
               <div className="row register-form">
                 <div className="col-md">
                   <form onSubmit={loginSubmit}>
@@ -131,17 +126,11 @@ function Login() {
                         type="submit"
                         className="btnRegister"
                         value="Login"
-                        data-toggle={data.tkn != null ? "modal" : ""}
-                        data-target={data.tkn != null ? "#exampleModal" : ""}
+                        data-toggle="modal"
+                        data-target="#exampleModal"
                       />
                     </div>
-                    {data.tkn != null ? (
-                      <Popup res={data} number={number} />
-                    ) : (
-                      <p className="error_login">
-                        * {data.dataErrorDescription} *
-                      </p>
-                    )}
+                    <Popup res={data} />
                   </form>
                 </div>
               </div>
@@ -151,7 +140,7 @@ function Login() {
               id="profile"
               role="tabpanel"
               aria-labelledby="profile-tab">
-              <h3 className="register-heading">Apply as a Hirer</h3>
+              <h3 className="register-heading">Register</h3>
               <div className="row register-form">
                 <div className="col-md-6">
                   <div className="form-group">
